@@ -1,6 +1,11 @@
+
 export default async function handler(req, res) {
   try {
-    const { message } = req.body || {};
+    if (req.method !== "POST") {
+      return res.status(405).json({ reply: "Method not allowed" });
+    }
+
+    const { message } = req.body;
 
     if (!message) {
       return res.status(400).json({ reply: "No message received" });
@@ -9,7 +14,7 @@ export default async function handler(req, res) {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.API_KEY}`,
+        "Authorization": "Bearer " + process.env.API_KEY,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -17,7 +22,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are Donna. Emotionally intelligent, confident, witty, slightly sarcastic, loyal to Sanjay."
+            content: "You are Donna. Smart, confident, slightly sarcastic, emotionally intelligent."
           },
           {
             role: "user",
@@ -29,13 +34,18 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    // 🔥 DEBUG: send full response if something wrong
+    if (!data.choices) {
+      return res.status(200).json({ reply: JSON.stringify(data) });
+    }
+
     return res.status(200).json({
-      reply: data.choices?.[0]?.message?.content || "No response"
+      reply: data.choices[0].message.content
     });
 
   } catch (err) {
     return res.status(500).json({
-      reply: "Error: " + err.message
+      reply: "ERROR: " + err.message
     });
   }
 }
