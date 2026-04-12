@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ reply: "No message received" });
     }
 
-    const response = await fetch(process.env.API_URL, {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.API_KEY}`,
