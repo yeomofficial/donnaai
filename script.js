@@ -41,7 +41,9 @@ async function send() {
     typingDiv.innerText = data.reply || "No reply";
 
     history.push({ role: "assistant", content: data.reply || "" });
-    if (history.length > 25) history = history.slice(-25);
+    if (history.length > 10) {          // ← start with 10
+  history = history.slice(-10);
+    }
 
   } catch (err) {
     typingDiv.innerText = "Donna is not responding... try again.";
