@@ -2,8 +2,6 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: black;
-  height: 100vh;
-
   display: flex;
   flex-direction: column;
 }
