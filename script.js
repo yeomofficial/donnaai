@@ -19,13 +19,18 @@ async function send() {
 
   addMessage("Typing...", "bot");
 
-  const res = await fetch("https://donnaserver.onrender.com/api/chat", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ message })
-  });
+  try {
+    const res = await fetch("https://donnaserver.onrender.com/api/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message })
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  chat.lastChild.innerText = data.reply;
+    chat.lastChild.innerText = data.reply;
+
+  } catch (err) {
+    chat.lastChild.innerText = "Donna is not responding... try again.";
+  }
 }
