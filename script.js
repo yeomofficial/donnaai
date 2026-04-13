@@ -1,8 +1,5 @@
 const chat = document.getElementById("chat");
 
-// 🧠 Memory storage
-let history = [];
-
 // Add message to UI
 function addMessage(text, type) {
   const div = document.createElement("div");
@@ -32,20 +29,8 @@ async function send() {
 
     const data = await res.json();
 
+    // replace typing
     chat.lastChild.innerText = data.reply;
-
-  } catch (err) {
-    chat.lastChild.innerText = "Donna is not responding... try again.";
-  }
-}
-
-    const data = await res.json();
-
-    // Replace typing with real reply
-    chat.lastChild.innerText = data.reply;
-
-    // Save Donna reply to memory
-    history.push({ role: "assistant", content: data.reply });
 
   } catch (err) {
     chat.lastChild.innerText = "Donna is not responding... try again.";
