@@ -18,30 +18,26 @@ async function send() {
 
   if (!message) return;
 
-  // Show user message
   addMessage(message, "user");
   input.value = "";
 
-  // Add to memory
-  history.push({ role: "user", content: message });
-
-  // 🔥 Limit memory (last 10 messages)
-  if (history.length > 10) {
-    history = history.slice(-10);
-  }
-
-  // Typing placeholder
   addMessage("Typing...", "bot");
 
   try {
     const res = await fetch("https://donnaserver.onrender.com/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ 
-        message,
-        history
-      })
+      body: JSON.stringify({ message })
     });
+
+    const data = await res.json();
+
+    chat.lastChild.innerText = data.reply;
+
+  } catch (err) {
+    chat.lastChild.innerText = "Donna is not responding... try again.";
+  }
+}
 
     const data = await res.json();
 
