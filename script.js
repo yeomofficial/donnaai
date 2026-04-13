@@ -1,0 +1,31 @@
+const chat = document.getElementById("chat");
+
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function send() {
+  const input = document.getElementById("msg");
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  addMessage(message, "user");
+  input.value = "";
+
+  addMessage("Typing...", "bot");
+
+  const res = await fetch("https://your-render-url.onrender.com/api/chat", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ message })
+  });
+
+  const data = await res.json();
+
+  chat.lastChild.innerText = data.reply;
+}
