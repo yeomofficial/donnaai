@@ -10,6 +10,8 @@ function addMessage(text, type) {
 }
 
 async function send() {
+  console.log("Send function started");   // for debugging
+
   const input = document.getElementById("msg");
   const message = input.value.trim();
 
@@ -18,7 +20,12 @@ async function send() {
   addMessage(message, "user");
   input.value = "";
 
-  addMessage("Typing...", "bot");
+  // Create typing indicator with reference
+  const typingDiv = document.createElement("div");
+  typingDiv.className = "msg bot";
+  typingDiv.innerText = "Typing...";
+  chat.appendChild(typingDiv);
+  chat.scrollTop = chat.scrollHeight;
 
   try {
     const res = await fetch("https://donnaserver.onrender.com/api/chat", {
@@ -26,6 +33,18 @@ async function send() {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ message })
     });
+
+    const data = await res.json();
+
+    typingDiv.innerText = data.reply || "No reply from Donna";
+
+  } catch (err) {
+    console.error(err);
+    typingDiv.innerText = "Donna is not responding... try again.";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
 
     const data = await res.json();
 
