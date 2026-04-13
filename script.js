@@ -10,17 +10,16 @@ function addMessage(text, type) {
 }
 
 async function send() {
-  console.log("Send function started");   // for debugging
-
   const input = document.getElementById("msg");
   const message = input.value.trim();
 
   if (!message) return;
 
+  // Add user message
   addMessage(message, "user");
   input.value = "";
 
-  // Create typing indicator with reference
+  // Add typing indicator
   const typingDiv = document.createElement("div");
   typingDiv.className = "msg bot";
   typingDiv.innerText = "Typing...";
@@ -30,28 +29,36 @@ async function send() {
   try {
     const res = await fetch("https://donnaserver.onrender.com/api/chat", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
     });
 
+    if (!res.ok) {
+      throw new Error("Server error: " + res.status);
+    }
+
     const data = await res.json();
 
+    // Replace "Typing..." with real reply
     typingDiv.innerText = data.reply || "No reply from Donna";
 
   } catch (err) {
-    console.error(err);
-    typingDiv.innerText = "Donna is not responding... try again.";
+    console.error(err);   // This will show in browser console if possible
+    typingDiv.innerText = "Donna is not responding... try again later.";
   }
 
   chat.scrollTop = chat.scrollHeight;
 }
 
-    const data = await res.json();
-
-    // replace typing
-    chat.lastChild.innerText = data.reply;
-
-  } catch (err) {
-    chat.lastChild.innerText = "Donna is not responding... try again.";
+// ==================== CONNECT THE BUTTON ====================
+// Add this at the very bottom of your <script> tag
+document.addEventListener("DOMContentLoaded", () => {
+  const sendBtn = document.getElementById("sendBtn");
+  
+  if (sendBtn) {
+    sendBtn.addEventListener("click", send);
+    console.log("✅ Send button connected!");
+  } else {
+    console.error("❌ Button with id='sendBtn' not found!");
   }
-}
+});
