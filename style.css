@@ -81,6 +81,10 @@ textarea {
   max-height: 120px;    /* limit growth */
 }
 
+textarea {
+  transition: height 0.15s ease;
+}
+
 /* Button */
 button {
   padding: 10px 16px;
