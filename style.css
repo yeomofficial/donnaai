@@ -93,6 +93,8 @@ button {
   background: black;
   color: white;
   cursor: pointer;
+  flex-shrink: 0;      /* 🔥 IMPORTANT */
+  white-space: nowrap;
 }
 
 /* 🔥 Responsive tweaks */
