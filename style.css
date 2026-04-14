@@ -74,12 +74,11 @@ textarea {
   padding: 12px;
   border-radius: 20px;
   border: 1px solid #ccc;
-  outline: none;
   font-size: 16px;
 
   resize: none;
-  max-height: 120px;
-  overflow-y: auto;
+  overflow-y: hidden;   /* 🔥 IMPORTANT */
+  max-height: 120px;    /* limit growth */
 }
 
 /* Button */
