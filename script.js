@@ -64,3 +64,18 @@ textarea.addEventListener("input", () => {
   textarea.style.height = "auto";              // reset
   textarea.style.height = textarea.scrollHeight + "px"; // grow
 });
+
+function sendMessage() {
+  const textarea = document.getElementById("msg");
+  const message = textarea.value.trim();
+
+  if (!message) return;
+
+  // your existing send logic here...
+
+  // ✅ CLEAR TEXT
+  textarea.value = "";
+
+  // 🔥 RESET HEIGHT
+  textarea.style.height = "auto";
+}
