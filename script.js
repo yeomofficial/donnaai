@@ -54,3 +54,13 @@ async function send() {
 
 // Button connection
 document.getElementById("sendBtn").addEventListener("click", send);
+
+
+// TEXT AREA
+
+const textarea = document.getElementById("msg");
+
+textarea.addEventListener("input", () => {
+  textarea.style.height = "auto";              // reset
+  textarea.style.height = textarea.scrollHeight + "px"; // grow
+});
