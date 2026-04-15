@@ -131,12 +131,14 @@ textarea.addEventListener("input", () => {
   textarea.style.height = textarea.scrollHeight + "px";
 });
 
-window.testNotification = async () => {
-  const permission = await Notification.requestPermission();
-
-  if (permission === "granted") {
-    new Notification("Donna", {
-      body: "Manual test notification"
-    });
-  }
-};
+function testNotification() {
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      new Notification("Donna", {
+        body: "Manual test notification 🔥"
+      });
+    } else {
+      alert("Permission denied");
+    }
+  });
+}
