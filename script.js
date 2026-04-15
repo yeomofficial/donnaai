@@ -132,13 +132,11 @@ textarea.addEventListener("input", () => {
 });
 
 function testNotification() {
-  Notification.requestPermission().then(permission => {
-    if (permission === "granted") {
-      new Notification("Donna", {
-        body: "Manual test notification 🔥"
-      });
-    } else {
-      alert("Permission denied");
-    }
+  navigator.serviceWorker.ready.then(reg => {
+    reg.showNotification("Donna", {
+      body: "Manual test notification 🔥",
+      icon: "/apple-touch-icon.png", // optional but good
+      badge: "/apple-touch-icon.png"
+    });
   });
 }
