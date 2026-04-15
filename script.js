@@ -1,13 +1,3 @@
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/firebase-messaging-sw.js")
-    .then((reg) => {
-      console.log("✅ Service Worker registered");
-    })
-    .catch((err) => {
-      console.log("❌ SW error:", err);
-    });
-}
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
@@ -21,6 +11,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+
+// 🔽 THEN SERVICE WORKER
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    .then((reg) => {
+      console.log("✅ SW registered");
+
+      return navigator.serviceWorker.ready;
+    })
+    .then(() => {
+      alert("🔥 SW is controlling the page");
+    })
+    .catch((err) => {
+      alert("❌ SW error:", err);
+    });
+}
 
 // 🔥 ASK PERMISSION
 async function initNotifications() {
