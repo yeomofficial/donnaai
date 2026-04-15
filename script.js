@@ -24,7 +24,7 @@ if ("serviceWorker" in navigator) {
       alert("🔥 SW is controlling the page");
     })
     .catch((err) => {
-      alert("❌ SW error:", err);
+      alert("❌ SW error: " + err.message);
     });
 }
 
