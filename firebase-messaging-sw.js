@@ -10,6 +10,18 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+
+// 🔥 ADD THIS (VERY IMPORTANT)
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+
+// 🔥 HANDLE FIREBASE MESSAGES
 messaging.onBackgroundMessage((payload) => {
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body
