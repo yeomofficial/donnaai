@@ -1,3 +1,13 @@
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    .then((reg) => {
+      console.log("✅ Service Worker registered");
+    })
+    .catch((err) => {
+      console.log("❌ SW error:", err);
+    });
+}
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
@@ -24,7 +34,7 @@ async function initNotifications() {
     console.log("🔥 TOKEN:", token);
 
     // 🔥 SEND TOKEN TO YOUR BACKEND
-    await fetch("/save-token", {
+    await fetch("https://donnaserver.onrender.com/save-token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token })
