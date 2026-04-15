@@ -1,3 +1,39 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAgRfWLv99iHzgjyBWdcmAD35uFV3FUhuk",
+  authDomain: "donna-3f01e.firebaseapp.com",
+  projectId: "donna-3f01e",
+  messagingSenderId: "808817210443",
+  appId: "1:808817210443:web:603638b669b8cc21cac9ce"
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+// 🔥 ASK PERMISSION
+async function initNotifications() {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: "BDbZPcyMwjI1rWYmaZ8ZiNmFPM_tw9lvwu65W98Ve-_7AocoPJKw-ea3WVSdy02D31o3JUqIXGr4NJdL5BH2SII"
+    });
+
+    console.log("🔥 TOKEN:", token);
+
+    // 🔥 SEND TOKEN TO YOUR BACKEND
+    await fetch("/save-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+  }
+}
+
+initNotifications();
+
 const chat = document.getElementById("chat");
 let history = [];   // local copy for this session
 
