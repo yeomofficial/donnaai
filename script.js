@@ -137,12 +137,28 @@ textarea.addEventListener("input", () => {
   textarea.style.height = textarea.scrollHeight + "px";
 });
 
-function testNotification() {
-  navigator.serviceWorker.ready.then(reg => {
-    reg.showNotification("Donna", {
-      body: "Manual test notification 🔥",
-      icon: "/apple-touch-icon.png", // optional but good
-      badge: "/apple-touch-icon.png"
-    });
+async function testNotification() {
+  alert("🚀 Function triggered");
+
+  const permission = await Notification.requestPermission();
+  alert("🔐 Permission: " + permission);
+
+  if (permission !== "granted") {
+    alert("❌ Permission not granted");
+    return;
+  }
+
+  const reg = await navigator.serviceWorker.ready;
+  alert("✅ SW ready");
+
+  alert("📤 Trying to show notification...");
+
+  reg.showNotification("Donna", {
+    body: "Manual test notification 🔥",
+    icon: "/apple-touch-icon.png",
+    badge: "/apple-touch-icon.png",
+    vibrate: [200, 100, 200]
   });
+
+  alert("✅ showNotification called");
 }
