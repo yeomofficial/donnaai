@@ -171,3 +171,21 @@ async function testNotification() {
     alert("❌ Error: " + err.message);
   }
 }
+
+// 👇 put it at the VERY END of script.js
+async function hardTest() {
+  alert("Start");
+
+  const permission = await Notification.requestPermission();
+  alert("Permission: " + permission);
+
+  const reg = await navigator.serviceWorker.ready;
+  alert("SW ready");
+
+  await reg.showNotification("TEST", {
+    body: "If you see this, system works",
+    vibrate: [200, 100, 200]
+  });
+
+  alert("After showNotification");
+}
