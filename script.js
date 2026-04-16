@@ -141,24 +141,33 @@ async function testNotification() {
   alert("🚀 Function triggered");
 
   const permission = await Notification.requestPermission();
-  alert("🔐 Permission: " + permission);
+  alert("Permission: " + permission);
 
   if (permission !== "granted") {
-    alert("❌ Permission not granted");
+    alert("❌ Permission denied");
+    return;
+  }
+
+  if (!("serviceWorker" in navigator)) {
+    alert("❌ No service worker support");
     return;
   }
 
   const reg = await navigator.serviceWorker.ready;
   alert("✅ SW ready");
 
-  alert("📤 Trying to show notification...");
+  if (!reg.showNotification) {
+    alert("❌ showNotification not supported");
+    return;
+  }
 
-  reg.showNotification("Donna", {
-    body: "Manual test notification 🔥",
-    icon: "/apple-touch-icon.png",
-    badge: "/apple-touch-icon.png",
-    vibrate: [200, 100, 200]
-  });
-
-  alert("✅ showNotification called");
+  try {
+    await reg.showNotification("Donna", {
+      body: "Manual test 🔥",
+      icon: "/apple-touch-icon.png"
+    });
+    alert("✅ Notification should appear now");
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+  }
 }
