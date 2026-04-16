@@ -106,7 +106,7 @@ async function send() {
 }
 
 // Button connection
-document.getElementById("sendBtn").addEventListener("click", send);
+
 
 
 // TEXT AREA
@@ -125,7 +125,9 @@ function sendMessage() {
   if (!message) return;
 
   // your existing send logic here...
-
+  window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("sendBtn").addEventListener("click", send);
+});
   // ✅ CLEAR TEXT
   textarea.value = "";
 
@@ -190,3 +192,6 @@ async function hardTest() {
 
   alert("After showNotification");
 }
+
+window.testNotification = testNotification;
+window.hardTest = hardTest;
