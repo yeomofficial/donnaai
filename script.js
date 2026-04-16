@@ -107,7 +107,9 @@ async function send() {
 
 // Button connection
 
-
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("sendBtn").addEventListener("click", send);
+});
 
 // TEXT AREA
 
@@ -125,8 +127,6 @@ function sendMessage() {
   if (!message) return;
 
   // your existing send logic here...
-  window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("sendBtn").addEventListener("click", send);
 });
   // ✅ CLEAR TEXT
   textarea.value = "";
@@ -134,11 +134,6 @@ function sendMessage() {
   // 🔥 RESET HEIGHT
   textarea.style.height = "auto";
 }
-
-textarea.addEventListener("input", () => {
-  textarea.style.height = "auto";
-  textarea.style.height = textarea.scrollHeight + "px";
-});
 
 async function testNotification() {
   alert("🚀 Function triggered");
