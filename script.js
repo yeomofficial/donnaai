@@ -126,12 +126,11 @@ function sendMessage() {
 
   if (!message) return;
 
-  // your existing send logic here...
-});
-  // ✅ CLEAR TEXT
-  textarea.value = "";
+  // call your main send function
+  send();
 
-  // 🔥 RESET HEIGHT
+  // clear input
+  textarea.value = "";
   textarea.style.height = "auto";
 }
 
