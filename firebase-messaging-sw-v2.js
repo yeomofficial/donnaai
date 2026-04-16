@@ -27,3 +27,11 @@ messaging.onBackgroundMessage((payload) => {
     body: payload.notification.body
   });
 });
+
+self.addEventListener("push", (event) => {
+  const data = event.data?.json();
+
+  self.registration.showNotification("🔥 PUSH RECEIVED", {
+    body: data?.notification?.body || "No body",
+  });
+});
