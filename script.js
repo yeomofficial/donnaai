@@ -167,7 +167,8 @@ async function testNotification() {
   try {
     await reg.showNotification("Donna", {
       body: "Manual test 🔥",
-      icon: "/apple-touch-icon.png"
+      icon: "/apple-touch-icon.png",
+      badge: "/apple-touch-icon.png"
     });
     alert("✅ Notification should appear now");
   } catch (err) {
