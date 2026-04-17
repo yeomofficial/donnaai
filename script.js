@@ -177,7 +177,7 @@ async function testNotification() {
 
   try {
     await reg.showNotification("Donna", {
-      body: "Manual test 🔥",
+      body: "It’s 10:44PM sweetie. Time to sleep, you had a bad day today, lets not push yourself too far. Take a break to sleep.",
       icon: "/apple-touch-icon.png",
       badge: "/apple-touch-icon.png"
     });
