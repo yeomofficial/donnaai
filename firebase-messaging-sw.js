@@ -28,10 +28,10 @@ messaging.onBackgroundMessage((payload) => {
   });
 });
 
-self.addEventListener("push", (event) => {
-  const data = event.data?.json();
-
-  self.registration.showNotification("🔥 PUSH RECEIVED", {
-    body: data?.notification?.body || "No body",
+messaging.onBackgroundMessage((payload) => {
+  self.registration.showNotification(payload.notification.title, {
+    body: payload.notification.body,
+    icon: "/apple-touch-icon.png",
+    badge: "/apple-touch-icon.png"
   });
 });
