@@ -63,7 +63,9 @@ async function initNotifications() {
   }
 }
 
-initNotifications();
+navigator.serviceWorker.ready.then(() => {
+  initNotifications();
+});
 
 const chat = document.getElementById("chat");
 let history = [];   // local copy for this session
