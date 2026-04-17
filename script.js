@@ -37,8 +37,9 @@ async function initNotifications() {
   if (permission === "granted") {
     try {
       const token = await getToken(messaging, {
-        vapidKey: "BDbZPcyMwjI1rWYmaZ8ZiNmFPM_tw9lvwu65W98Ve-_7AocoPJKw-ea3WVSdy02D31o3JUqIXGr4NJdL5BH2SII"
-      });
+  vapidKey: "BDbZPcyMwjI1rWYmaZ8ZiNmFPM_tw9lvwu65W98Ve-_7AocoPJKw-ea3WVSdy02D31o3JUqIXGr4NJdL5BH2SII",
+  serviceWorkerRegistration: await navigator.serviceWorker.ready
+});
 
       alert("TOKEN: " + token);
 
