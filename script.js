@@ -15,7 +15,7 @@ const messaging = getMessaging(app);
 alert("JS loaded");
 // 🔽 THEN SERVICE WORKER
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./firebase-messaging-sw-v2.js")
+  navigator.serviceWorker.register("./firebase-messaging-sw.js")
     .then((reg) => {
       console.log("✅ SW registered");
 
