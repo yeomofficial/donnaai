@@ -32,20 +32,34 @@ if ("serviceWorker" in navigator) {
 // 🔥 ASK PERMISSION
 async function initNotifications() {
   const permission = await Notification.requestPermission();
+  alert("Permission: " + permission);
 
   if (permission === "granted") {
-    const token = await getToken(messaging, {
-      vapidKey: "BDbZPcyMwjI1rWYmaZ8ZiNmFPM_tw9lvwu65W98Ve-_7AocoPJKw-ea3WVSdy02D31o3JUqIXGr4NJdL5BH2SII"
-    });
+    try {
+      const token = await getToken(messaging, {
+        vapidKey: "BDbZPcyMwjI1rWYmaZ8ZiNmFPM_tw9lvwu65W98Ve-_7AocoPJKw-ea3WVSdy02D31o3JUqIXGr4NJdL5BH2SII"
+      });
 
-    console.log("🔥 TOKEN:", token);
+      alert("TOKEN: " + token);
 
-    // 🔥 SEND TOKEN TO YOUR BACKEND
-    await fetch("https://donnaserver.onrender.com/save-token", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token })
-    });
+      if (!token) {
+        alert("❌ Token is NULL");
+        return;
+      }
+
+      alert("📤 Sending token to backend...");
+
+      const res = await fetch("https://donnaserver.onrender.com/save-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token })
+      });
+
+      alert("✅ Sent. Status: " + res.status);
+
+    } catch (err) {
+      alert("❌ Error: " + err.message);
+    }
   }
 }
 
