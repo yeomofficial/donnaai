@@ -23,15 +23,15 @@ self.addEventListener("activate", (event) => {
 
 // 🔥 HANDLE FIREBASE MESSAGES
 messaging.onBackgroundMessage((payload) => {
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body
-  });
-});
+  console.log("📩 Background message:", payload);
 
-messaging.onBackgroundMessage((payload) => {
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body,
-    icon: "/apple-touch-icon.png",
-    badge: "/apple-touch-icon.png"
-  });
+  self.registration.showNotification(
+    payload.notification?.title || "Donna",
+    {
+      body: payload.notification?.body || "",
+      icon: "/apple-touch-icon.png",
+      badge: "/apple-touch-icon.png",
+      vibrate: [200, 100, 200]
+    }
+  );
 });
