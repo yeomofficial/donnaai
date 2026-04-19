@@ -25,13 +25,13 @@ self.addEventListener("activate", (event) => {
 messaging.onBackgroundMessage((payload) => {
   console.log("📩 Background message:", payload);
 
-  self.registration.showNotification(
-    payload.notification?.title || "Donna",
-    {
-      body: payload.notification?.body || "",
-      icon: "/apple-touch-icon.png",
-      badge: "/apple-touch-icon.png",
-      vibrate: [200, 100, 200]
-    }
-  );
+  const title = payload.data?.title || "Donna";
+  const body = payload.data?.body || "";
+
+  self.registration.showNotification(title, {
+    body: body,
+    icon: "/apple-touch-icon.png",
+    badge: "/apple-touch-icon.png",
+    vibrate: [200, 100, 200]
+  });
 });
